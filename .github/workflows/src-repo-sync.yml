@@ -46,8 +46,8 @@ jobs:
       - name: Commit and push changes in walter-arduino
         run: |
           cd walter-esp-idf
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "src sync action"
+          git config user.email "src-sync-action@users.noreply.github.com"
           git add src
           if ! git diff --cached --quiet; then
             git commit -m "${COMMIT_MESSAGE}" -m "${COMMIT_DESCRIPTION}"
