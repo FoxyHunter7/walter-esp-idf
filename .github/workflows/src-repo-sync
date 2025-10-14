@@ -1,0 +1,45 @@
+name: Sync src folder to walter-arduino
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-src:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key for deploy
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SRC_REPO_SYNC_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Checkout walter-arduino via SSH
+        uses: actions/checkout@v4
+        with:
+          repository: FoxyHunter7/walter-arduino
+          ssh-key: ${{ secrets.SRC_REPO_SYNC_KEY }}
+          path: walter-esp-idf
+
+      - name: Copy src folder from walter-esp-idf to walter-arduino
+        run: |
+          rm -rf walter-esp-idf/src
+          cp -R src walter-esp-idf/src
+
+      - name: Commit and push changes in walter-arduino
+        run: |
+          cd walter-esp-idf
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync src folder from walter-esp-idf (commit ${{ github.sha }} [skip ci]"
+            git push origin main
+          else
+            echo "No changes to sync"
+          fi
