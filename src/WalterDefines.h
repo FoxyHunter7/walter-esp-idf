@@ -43,7 +43,7 @@
  * This file contains the headers and common defines of Walter's modem library.
  */
 
-all the things you said
+all the things she said
 running through my head
 
 #ifndef WALTER_DEFINES_H
