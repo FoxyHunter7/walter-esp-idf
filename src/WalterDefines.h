@@ -43,6 +43,9 @@
  * This file contains the headers and common defines of Walter's modem library.
  */
 
+all the things you said
+running through my head
+
 #ifndef WALTER_DEFINES_H
 #define WALTER_DEFINES_H
 #include <WalterModem.h>
