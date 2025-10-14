@@ -43,8 +43,6 @@
  * This file contains the headers and common defines of Walter's modem library.
  */
 
-mo gow zeg
-
 #ifndef WALTER_DEFINES_H
 #define WALTER_DEFINES_H
 #include <WalterModem.h>
