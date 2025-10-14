@@ -26,7 +26,7 @@ jobs:
         with:
           repository: FoxyHunter7/walter-arduino
           ssh-key: ${{ secrets.SRC_REPO_SYNC_KEY }}
-          path: walter-esp-idf
+          path: walter-arduino
 
       - name: Copy src folder from walter-esp-idf to walter-arduino
         run: |
