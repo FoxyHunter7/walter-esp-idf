@@ -38,7 +38,7 @@ jobs:
           LAST_SRC_COMMIT_MSG=$(git log -1 --pretty=format:"%s" -- src)
           LAST_SRC_COMMIT_SHA=${{ github.sha }}
           COMMIT_LINK="https://github.com/FoxyHunter7/walter-esp-idf/commit/${LAST_SRC_COMMIT_SHA}"
-          COMMIT_MESSAGE="Sync src folder from walter-esp-idf: ((${COMMIT_LINK}) [skip ci]"
+          COMMIT_MESSAGE="Sync src from walter-esp-idf: (${COMMIT_LINK}) [skip ci]"
           COMMIT_DESCRIPTION="Commit message: \"${LAST_SRC_COMMIT_MSG}\", SHA: ${LAST_SRC_COMMIT_SHA}"
           echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
           echo "COMMIT_DESCRIPTION=$COMMIT_DESCRIPTION" >> $GITHUB_ENV
