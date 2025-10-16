@@ -1,7 +1,8 @@
 name: Sync src folder to walter-arduino
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
     paths:
@@ -9,6 +10,7 @@ on:
 
 jobs:
   sync-src:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repo
@@ -35,13 +37,14 @@ jobs:
 
       - name: Prepare commit info
         run: |
-          LAST_SRC_COMMIT_MSG=$(git log -1 --pretty=format:"%s" -- src)
-          LAST_SRC_COMMIT_SHA=${{ github.sha }}
-          COMMIT_LINK="https://github.com/FoxyHunter7/walter-esp-idf/commit/${LAST_SRC_COMMIT_SHA}"
-          COMMIT_MESSAGE="Sync src from walter-esp-idf: (${COMMIT_LINK}) [skip ci]"
-          COMMIT_DESCRIPTION="Commit message: \"${LAST_SRC_COMMIT_MSG}\", SHA: ${LAST_SRC_COMMIT_SHA}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          COMMIT_LINK="https://github.com/FoxyHunter7/walter-esp-idf/pull/${PR_NUMBER}"
+          COMMIT_MESSAGE="Sync: src from walter-esp-idf PR #${PR_NUMBER} (${COMMIT_LINK}) [skip ci]"
+          COMMIT_DESCRIPTION="PR title: \"${PR_TITLE}\", PR: #${PR_NUMBER}"
           echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
           echo "COMMIT_DESCRIPTION=$COMMIT_DESCRIPTION" >> $GITHUB_ENV
+
 
       - name: Commit and push changes in walter-arduino
         run: |
